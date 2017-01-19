@@ -2,7 +2,7 @@ var work = {
 	"jobs": [{
 		"employer": "Algocodex S.A.S.",
 		"title": "Senior Software Engineer",
-		"location": "Bogotá, CO",
+		"location": "Bogotá",
 		"dates": "2012 - 2017",
 		"description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt"
 	},	
@@ -19,16 +19,16 @@ var work = {
 var bio = {
 	"name": "nestor marin",
 	"role": "Software Engineer",
-	"welcomeMessage": "Consectetur adipiscing elit",
-	"biopic": "images/fry.jpg",
 	"contacts": {
-		"mobile": "300-221-6591",
+		"mobile": "+57 300 221 6591",
 		"email": "nestor.mc@gmail.com",
 		"github": "nemacrux",
 		"twitter": "@nemacrux",
-		"location": "Bogotá, CO"
+		"location": "Bogotá"
 	},
-	"skills": ["programming", "java", "js"]
+	"welcomeMessage": "Consectetur adipiscing elit",
+	"skills": ["programming", "java", "js"],
+	"biopic": "images/fry.jpg"
 };
 
 
@@ -59,7 +59,6 @@ var projects = {
 	}]
 };
 
-
 if(bio.skills.length > 0) {
 	$("#header").append(HTMLskillsStart);
 	var formattedSkill = HTMLskills.replace("%data%", bio.skills[0]);
@@ -72,23 +71,6 @@ if(bio.skills.length > 0) {
 	$("#skills").append(formattedSkill);
 
 }
-
-function displayWork(){
-
-	work.jobs.forEach(function(job){
-		$("#workExperience").append(HTMLworkStart);
-		var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer);
-		var formattedWorkTitle = HTMLworkTitle.replace("%data%", job.title);
-		var formattedWorkDates = HTMLworkDates.replace("%data%", job.dates);
-		var formattedWorkLocation = HTMLworkLocation.replace("%data%", job.location);
-		var formattedWorkDescription = HTMLworkDescription.replace("%data%", job.description);
-		$(".work-entry:last").append(formattedEmployer + formattedWorkTitle);
-		$(".work-entry:last").append(formattedWorkDates);
-		$(".work-entry:last").append(formattedWorkLocation);
-		$(".work-entry:last").append(formattedWorkDescription);
-	});
-
-};
 
 function inName(){
 	
@@ -108,6 +90,41 @@ function inName(){
     return finalName;
 };
 
+bio.display = function(){
+	var formattedName = HTMLheaderName.replace("%data%", bio.name);
+	var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+	var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
+	var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
+	var formattedGitHub = HTMLgithub.replace("%data%", bio.contacts.github);
+	var formattedPicture = HTMLbioPic.replace("%data%", bio.biopic);
+	var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
+	var formattedSkills = HTMLskills.replace("%data%", bio.skills);
+
+	$("#header").prepend(formattedRole);
+	$("#header").prepend(formattedName);
+	$("#header").prepend(formattedSkills);
+	$("#header").prepend(formattedWelcomeMsg);
+	$("#header").prepend(formattedPicture);
+	$("#header").prepend(formattedMobile);
+	$("#header").prepend(formattedEmail);
+	$("#header").prepend(formattedGitHub);
+};
+
+work.display = function(){
+	work.jobs.forEach(function(job){
+		$("#workExperience").append(HTMLworkStart);
+		var formattedEmployer = HTMLworkEmployer.replace("%data%", job.employer);
+		var formattedWorkTitle = HTMLworkTitle.replace("%data%", job.title);
+		var formattedWorkDates = HTMLworkDates.replace("%data%", job.dates);
+		var formattedWorkLocation = HTMLworkLocation.replace("%data%", job.location);
+		var formattedWorkDescription = HTMLworkDescription.replace("%data%", job.description);
+		$(".work-entry:last").append(formattedEmployer + formattedWorkTitle);
+		$(".work-entry:last").append(formattedWorkDates);
+		$(".work-entry:last").append(formattedWorkLocation);
+		$(".work-entry:last").append(formattedWorkDescription);
+	});
+
+};
 
 projects.display = function(){
 	projects.projects.forEach(function(project){
@@ -129,36 +146,64 @@ projects.display = function(){
 	});
 }
 
+education.display = function(){
+	education.schools.forEach(function(school){
+		$("#education").append(HTMLschoolStart);
+		var formattedSchoolName = HTMLschoolName.replace("%data%", school.name);
+		var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", school.degree);
+		var formattedSchoolDates = HTMLschoolDates.replace("%data%", school.dates);
+		var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", school.location);
 
-displayWork();
+		$(".education-entry:last").append(formattedSchoolName+formattedSchoolDegree);
+		$(".education-entry:last").append(formattedSchoolDates);
+		$(".education-entry:last").append(formattedSchoolLocation);
+
+		if(school.majors.length > 0){
+			school.majors.forEach(function(major){
+				var formattedSchoolMayor = HTMLschoolMajor.replace("%data%", major);
+				$(".education-entry:last").append(formattedSchoolMayor);
+			});
+		}	
+
+	});
+
+	education.onlineCourses.forEach(function(course){
+		$("#education").append(HTMLonlineClasses);
+		var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", course.school);
+		var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", course.title);
+		var formattedOnlineDates = HTMLonlineDates.replace("%data%", course.dates);
+		var formattedOnlineUrl = HTMLonlineURL.replace("%data%", course.url);
+
+		$(".education-entry:last").append(formattedOnlineTitle + formattedOnlineSchool);
+		$(".education-entry:last").append(formattedOnlineDates);
+		$(".education-entry:last").append(formattedOnlineUrl);
+	});
+};
+
+
+
+
+// "onlineCourses": [{
+// 		"title": "JavaScript Basics",
+// 		"school": "Udacity",
+// 		"dates": "2017",
+// 		"url": "https://www.udacity.com/course/javascript-basics--ud804"
+// 	}]
+
+// "schools": [{
+// 		"name": "Universidad Nacional de Colombia",
+// 		"location": "Bogotá",
+// 		"degree": "BA",
+// 		"majors": ["Systems Engineer"],
+// 		"dates": "2007-2013",
+// 		"url": "www.unal.edu.co"
+// 	}],
+
+work.display();
 projects.display();
-
-var formattedName = HTMLheaderName.replace("%data%", bio.name);
-var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
+education.display();
 
 $("#main").append(internationalizeButton);
+$("#mapDiv").append(googleMap);
 
-/*
-var formattedEmail = HTMLemail.replace("%data%", bio.contacts.email);
-var formattedMobile = HTMLmobile.replace("%data%", bio.contacts.mobile);
-var formattedGitHub = HTMLgithub.replace("%data%", bio.contacts.github);
-var formattedPicture = HTMLbioPic.replace("%data%", bio.biopic);
-var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMessage);
-var formattedSkills = HTMLskills.replace("%data%", bio.skills);
-var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[0].name); 
-var formmatedWorkPosition = HTMLworkTitle.replace("%data%", work["jobs"][0].title);
 
-$("#header").prepend(formattedSkills);
-$("#header").prepend(formattedWelcomeMsg);
-$("#header").prepend(formattedPicture);
-$("#header").prepend(formattedMobile);
-$("#header").prepend(formattedEmail);
-$("#header").prepend(formattedGitHub);
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
-$("#header").append(formattedSchoolName);
-$("#header").append(formmatedWorkPosition);
-*/
